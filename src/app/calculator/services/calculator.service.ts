@@ -44,10 +44,10 @@ export class CalculatorService {
 
       if ( this.resultText().length === 1) {
         this.resultText.set('0');
+        return; 
       }
 
-      this.resultText.update( currentValue =>  currentValue.slice(0, -1));
-
+      this.resultText.update((currentValue) =>  currentValue.slice(0, -1));
       return;
     }
 
@@ -67,13 +67,17 @@ export class CalculatorService {
     }
 
     //Validar punto decimal
-    if ( value === '.' && !this.resultText().includes('.')) {
+    if ( value === '.') {
+      if (this.resultText().includes('.')) {
+        return;
+      }
+
       if (this.resultText() === '0' || this.resultText() === '') {
         this.resultText.set('0.');
         return;
       }
-        this.resultText.update( (currentValue) => currentValue  + '.');
-        return;
+      this.resultText.update((text) => text + '.');
+      return;
     }
 
     //Manejo del cero
